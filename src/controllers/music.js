@@ -41,7 +41,7 @@ exports.musics = async (req, res) => {
 
 exports.addMusic = async (req, res) => {
     try {
-      const result = await cloudinary.uploader.upload(req.file.path, {
+      const result = await cloudinary.uploader.upload(req.files.path, {
         folder: "dumbmerch_file",
         use_filename: true,
         unique_filename: false,
