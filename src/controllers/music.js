@@ -19,7 +19,7 @@ exports.musics = async (req, res) => {
           return{
             ...item,
             thumbnail: process.env.FILE_PATH + item.thumbnail,
-            attache: process.env.FILE_PATH + item.attache
+            attache: process.env.FILE_PATH_MUSIC + item.attache
           }
         })
 
@@ -46,13 +46,19 @@ exports.addMusic = async (req, res) => {
         use_filename: true,
         unique_filename: false,
       })
+      const resultMusic = await cloudinary.uploader.upload(req.files.path, {
+        folder: "dumbmerch_file",
+        use_filename: true,
+        unique_filename: false,
+        resource_type: "raw",
+      })
       const data = req.body;
       let newMusic = await music.create({
         ...data,
         title: req.body.title,
         year: req.body.year,
         thumbnail: result.public_id,
-        attache: result.public_id,
+        attache: resultMusic.public_id,
       });
   
       newMusic = JSON.parse(JSON.stringify(newMusic));
