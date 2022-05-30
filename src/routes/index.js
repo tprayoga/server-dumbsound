@@ -12,6 +12,8 @@ const { auth } = require("../middlewares/auth");
 router.get('/musics', musics)
 router.post("/music", uploadFile(), addMusic);
 
+router.get("/users", getUsers);
+
 router.post('/artis', addArtis)
 router.get('/artiss', getArtis)
 
