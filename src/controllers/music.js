@@ -51,8 +51,8 @@ exports.addMusic = async (req, res) => {
         ...data,
         title: req.body.title,
         year: req.body.year,
-        thumbnail: req.files.thumbnail[0].filename,
-        attache: req.files.attache[0].filename,
+        thumbnail: result.public_id,
+        attache: result.public_id,
       });
   
       newMusic = JSON.parse(JSON.stringify(newMusic));
