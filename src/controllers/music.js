@@ -1,5 +1,5 @@
 const { music, artis } = require('../../models')
-
+const cloudinary = require('../utils/cloudinary')
 exports.musics = async (req, res) => {
     try {
         let musics = await music.findAll({
