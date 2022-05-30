@@ -51,7 +51,7 @@ exports.addMusic = async (req, res) => {
         folder: "dumbmerch_file",
         use_filename: true,
         unique_filename: false,
-        resource_type: "raw",
+        resource_type: "video",
       })
       const thumbnail = result.public_id
       const attache = resultMusic.public_id
