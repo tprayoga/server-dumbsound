@@ -41,37 +41,62 @@ exports.musics = async (req, res) => {
 
 exports.addMusic = async (req, res) => {
     try {
-      const result = await cloudinary.uploader.upload(req.files.path, {
+      const data = req.body
+      const result = await cloudinary.uploader.upload(req.files.thumbnail[0].path,{
         folder: "dumbmerch_file",
         use_filename: true,
         unique_filename: false,
       })
-      const resultMusic = await cloudinary.uploader.upload(req.files.path, {
+      const resultMusic = await cloudinary.uploader.upload(req.files.attache[0].path,{
         folder: "dumbmerch_file",
         use_filename: true,
         unique_filename: false,
         resource_type: "raw",
       })
-      const data = req.body;
-      let newMusic = await music.create({
+      const thumbnail = result.public_id
+      const attache = resultMusic.public_id
+
+      const dataUpload ={
         ...data,
-        title: req.body.title,
-        year: req.body.year,
-        thumbnail: result.public_id,
-        attache: resultMusic.public_id,
-      });
-  
-      newMusic = JSON.parse(JSON.stringify(newMusic));
-      newMusic = {
-        ...newMusic,
-      };
-  
+        thumbnail,
+        attache
+      }
+      await music.create(dataUpload)
       res.status(200).send({
-        status: "success",
-        data: {
-          newMusic,
-        },
-      });
+        status: 'success',
+        message: 'Music Successfully Added',
+      })
+      // const result = await cloudinary.uploader.upload(req.files.path, {
+      //   folder: "dumbmerch_file",
+      //   use_filename: true,
+      //   unique_filename: false,
+      // })
+      // const resultMusic = await cloudinary.uploader.upload(req.files.path, {
+      //   folder: "dumbmerch_file",
+      //   use_filename: true,
+      //   unique_filename: false,
+      //   resource_type: "raw",
+      // })
+      // const data = req.body;
+      // let newMusic = await music.create({
+      //   ...data,
+      //   title: req.body.title,
+      //   year: req.body.year,
+      //   thumbnail: result.public_id,
+      //   attache: resultMusic.public_id,
+      // });
+  
+      // newMusic = JSON.parse(JSON.stringify(newMusic));
+      // newMusic = {
+      //   ...newMusic,
+      // };
+  
+      // res.status(200).send({
+      //   status: "success",
+      //   data: {
+      //     newMusic,
+      //   },
+      // });
     } catch (error) {
       console.log(error);
       res.send({
